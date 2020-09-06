@@ -1,5 +1,3 @@
-For the above business requirements, you could create your own solution, or you could work on top of the provided solution.
-
 If you choose to work on top of the provided solution, we expect you to demo
 
 ### **Problem solving**
