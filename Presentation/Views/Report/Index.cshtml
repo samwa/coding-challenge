@@ -4,10 +4,29 @@
 {
 	<script>
     $(function(){
-		$("#States_SelectedList").change(function(e){
-         var val=$(this).val();
-			$("#reportPartial").load("/Report/ReportGrid?stateId=" +val);
-       });
+      $("#States_SelectedList").change(function (e) {
+        var val = $(this).val();
+        $("#reportPartial").load("/Report/ReportGrid?stateId=" + val);
+
+        $("#showAll").text('Show All');
+        $("#showAll").attr("href", "#showAll");
+      });
+
+      $("#showAll").click(function (e) {
+        e.preventDefault();
+        var state = $("#States_SelectedList option:selected").val();
+        var val = $(this).attr("href");
+        if (val === "#showAll") {
+          $("#reportPartial").load("/Report/ReportGrid?showAll=true&stateId=" + state);
+          $(this).text('Show Above Median');
+          $(this).attr("href", "#aboveMedian");
+        }
+        if (val === "#aboveMedian") {
+          $("#reportPartial").load("/Report/ReportGrid?showAll=false&stateId=" + state);
+          $(this).text('Show All');
+          $(this).attr("href", "#showAll");
+        }
+      });
     });
 	</script>
 }
@@ -25,6 +44,8 @@
 		string vicId = ViewData["VicId"] as string;
 		}
 	@Html.DropDownList("States_SelectedList", states)
+
+  <a href="#showAll" id="showAll">Show All</a>
 </div>
 <div class="col-md-3"></div>
 <br/><br/>

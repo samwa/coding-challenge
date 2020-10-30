@@ -75,7 +75,7 @@ namespace Logic.Services.Report
 			return data;
 		}
 
-		public IEnumerable<ReportModel> GetDisadges(int? stateId)
+		public IEnumerable<ReportModel> GetDisadges(int? stateId, bool showAll = false)
 		{
 			// Default state
 			if (!stateId.HasValue)
@@ -87,12 +87,14 @@ namespace Logic.Services.Report
 			{
 				var data2011 = db.Scores
 					.Where(p => p.Year == 2011
-						&& p.Location.State.StateId == stateId)
+						&& p.Location.State.StateId == stateId
+                        && (p.Location.State.Median < p.DisadvantageScore || showAll))
 					.Select(p => new { p.Location.LocationId, p.DisadvantageScore })
 					.ToList();
 				var data2016 = db.Scores
 					.Where(p => p.Year == 2016
-						&& p.Location.State.StateId == stateId)
+						&& p.Location.State.StateId == stateId
+                        && (p.Location.State.Median < p.DisadvantageScore || showAll))
 					.Select(p => new { p.Location.LocationId, p.DisadvantageScore })
 					.ToList();
 				var both = data2011.Join(

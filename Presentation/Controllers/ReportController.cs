@@ -24,10 +24,10 @@ namespace Presentation.Controllers
 			return View(service.GetDisadges(null));
 		}
 
-		public ActionResult ReportGrid(string stateId)
+		public ActionResult ReportGrid(string stateId, bool showAll = false)
 		{
 			int id = stateId != null ? int.Parse(stateId) : -1;
-			return PartialView(service.GetDisadges(id));
+			return PartialView(service.GetDisadges(id, showAll));
 		}
 	}
 }
