@@ -10,11 +10,12 @@ namespace Repository
 			: base("StringDBContext")
 		{
 			Database.SetInitializer(new Seeding());
-		}
-		public DbSet<State> States { get; set; }
-		public DbSet<Location> Locations { get; set; }
-		public DbSet<Score> Scores { get; set; }
-		public DbSet<ScoreDetail> ScoreDetails { get; set; }
+        }
+
+        public virtual DbSet<State> States { get; set; }
+		public virtual DbSet<Location> Locations { get; set; }
+		public virtual DbSet<Score> Scores { get; set; }
+		public virtual DbSet<ScoreDetail> ScoreDetails { get; set; }
 	}
 }
 

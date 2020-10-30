@@ -1,4 +1,5 @@
 ﻿using Logic.Services.Report;
+using Repository;
 using System;
 using System.Data;
 using System.Linq;
@@ -8,7 +9,13 @@ namespace Presentation.Controllers
 {
 	public class ReportController : Controller
 	{
-		private readonly ReportService service = new ReportService();
+        private readonly ReportService service;
+
+        public ReportController()
+        {
+            LGAContext context = new LGAContext();
+            service = new ReportService(context);
+        }
 
 		// GET: Disadvs
 		public ActionResult Index()

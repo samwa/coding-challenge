@@ -10,7 +10,13 @@ namespace Presentation.Controllers
 {
 	public class ScoresController : Controller
 	{
-		private ReportService service = new ReportService();
+        private ReportService service;
+
+        public ScoresController()
+        {
+            LGAContext context = new LGAContext();
+            service = new ReportService(context);
+        }
 
 		// GET: Scores
 		public ActionResult Index()

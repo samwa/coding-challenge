@@ -7,8 +7,12 @@ using System.Linq;
 namespace Logic.Services.Report
 {
 	public class ReportService
-	{
+    {
 		private readonly LGAContext db = new LGAContext();
+        public ReportService(LGAContext context)
+        {
+            db = context;
+        }
 
 		private int _VicStateId = -1;
 		public int VicStateId
