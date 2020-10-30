@@ -1,8 +1,11 @@
-﻿using Logic.Services.Report;
+﻿using Data.ViewModel;
+using Logic.Services.Report;
 using Repository;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Presentation.Controllers
@@ -28,13 +31,27 @@ namespace Presentation.Controllers
 				Selected = (p.StateName.Equals("Victoria", StringComparison.CurrentCultureIgnoreCase))
 			})
 			.ToList();
-			return View(service.GetDisadges(null));
-		}
+
+            var cached = System.Web.HttpContext.Current.Cache["ReportController:Index"] as IEnumerable<ReportModel>;
+            if (cached == null)
+            {
+                cached = service.GetDisadges(null);
+                System.Web.HttpContext.Current.Cache["ReportController:Index"] = cached;
+            }
+            return View(cached);
+        }
 
 		public ActionResult ReportGrid(string stateId, bool showAll = false)
 		{
 			int id = stateId != null ? int.Parse(stateId) : -1;
-			return PartialView(service.GetDisadges(id, showAll));
+
+            var cached = System.Web.HttpContext.Current.Cache["ReportController:ReportGrid:"+ stateId + ":"+showAll] as IEnumerable<ReportModel>;
+            if (cached == null)
+            {
+                cached = service.GetDisadges(id, showAll);
+                System.Web.HttpContext.Current.Cache["ReportController:ReportGrid:" + stateId + ":" + showAll] = cached;
+            }
+            return PartialView(cached);
 		}
 	}
 }
